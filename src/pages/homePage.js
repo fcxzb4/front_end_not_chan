@@ -1,9 +1,9 @@
 import { usePosts } from "../hooks/usePosts";
-import styles from './homePage.scss'
-import PostForm from "../components/post/postForm";
-import PostCard from "../components/post/postCard";
+import PostForm from "../components/post/PostForm";
+import PostList from "../components/post/postList";
+import "./Home.scss";
 
-function homePage() {
+function HomePage() {
   const { posts, loading, error, addPost } = usePosts();
 
   if (loading) return <p>Carregando...</p>;
@@ -11,20 +11,13 @@ function homePage() {
 
   return (
     <>
-      <PostForm onAddPost={addPost} />
-
-      {posts.map(post => (
-        <PostCard key={post.id} post={post} />
-      ))}
-
-      <div className="home-page">
-      <h1>Relatos Anônimos</h1>
-
-      {/* PostForm precisa ter className="post-form" */}
-      {/* PostCard precisa ter className="post-card" */}
-    </div>
+    <div className="home-page">
+    <PostForm onAddPost={addPost} />
+    <PostList posts={posts} />
+  </div>
     </>
   );
 }
 
-export default homePage ;
+export default HomePage;
+
