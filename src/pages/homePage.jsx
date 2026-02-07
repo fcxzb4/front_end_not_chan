@@ -1,7 +1,7 @@
 import { usePosts } from "../hooks/usePosts";
 import PostForm from "../components/post/postForm";
 import PostList from "../components/post/postList";
-import style from "./home_page.scss";
+import style from "./home_page.module.scss";
 
 function HomePage() {
   const { posts, loading, error, addPost } = usePosts();

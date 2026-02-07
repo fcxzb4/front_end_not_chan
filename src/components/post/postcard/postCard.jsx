@@ -1,4 +1,4 @@
-import style from './post_card.scss'
+import style from './post_card.module.scss'
 
 function PostCard({ post }) {
   return (
