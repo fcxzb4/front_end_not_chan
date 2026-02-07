@@ -1,4 +1,4 @@
-import PostCard from "../post/postcard/postCard";
+import PostCard from "./postcard/postCard";
 
 function PostList({ posts }) {
   if (!posts.length) {
