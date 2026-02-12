@@ -11,7 +11,7 @@ function HomePage() {
 
   return (
     <>
-    <div className={style.home-page}>
+    <div className={style.home_page}>
     <PostForm onAddPost={addPost} />
     <PostList posts={posts} />
   </div>
