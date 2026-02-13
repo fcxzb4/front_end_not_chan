@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://api-not-chan-8zrapl5h8-steezus-projects.vercel.app/";
 
 export async function getPosts() {
   const response = await fetch(`${API_URL}/posts`);
