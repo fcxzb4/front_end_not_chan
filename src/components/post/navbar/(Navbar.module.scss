@@ -1,0 +1,29 @@
+$reddit-orange: #FF4500;
+$reddit-blue: #0079D3;
+$white: #ffffff;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  background-color: $white;
+  border-bottom: 1px solid #edeff1;
+
+  .login_btn {
+    display: inline-block;
+    background-color: transparent;
+    color: $reddit-blue;
+    border: 1px solid $reddit-blue;
+    padding: 6px 24px;
+    border-radius: 999px; // Botão bem arredondado
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba($reddit-blue, 0.05);
+    }
+  }
+}

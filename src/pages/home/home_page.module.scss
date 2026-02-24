@@ -1,0 +1,63 @@
+$reddit-orange: #FF4500;
+$reddit-blue: #0079D3;
+$bg-color: #DAE0E6; // Cinza clássico do fundo do Reddit
+$white: #ffffff;
+
+.container {
+  background-color: $bg-color;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+  background-color: $white;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .logo {
+    font-weight: bold;
+    color: $reddit-orange;
+    font-size: 1.2rem;
+  }
+
+  .login_button {
+    text-decoration: none;
+    background-color: $reddit-blue;
+    color: $white;
+    padding: 6px 20px;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+
+  .feed_container {
+    width: 100%;
+    max-width: 640px; // Largura padrão de um feed de posts
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.status_msg, .error_msg {
+  text-align: center;
+  padding: 20px;
+  background: $white;
+  border-radius: 4px;
+}
