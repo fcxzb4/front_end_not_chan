@@ -1,4 +1,4 @@
-const API_URL = 'https://api-not-chan-bmmzu10qh-steezus-projects.vercel.app';
+const API_URL = 'https://api-not-chan.vercel.app';
 
 export const authService = {
   async login(email, password) {

@@ -1,4 +1,4 @@
-const API_URL = "https://api-not-chan-bmmzu10qh-steezus-projects.vercel.app";
+const API_URL = "https://api-not-chan.vercel.app";
 
 export async function getPosts() {
   const response = await fetch(`${API_URL}/posts`);
