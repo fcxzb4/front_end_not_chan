@@ -1,0 +1,84 @@
+$reddit-blue: #0079D3;
+$reddit-grey: #878A8C;
+$border-color: #EDEFF1;
+$bg-hover: #F6F7F8;
+$white: #ffffff;
+
+.comment_section {
+  background-color: $white;
+  padding: 16px;
+  border-radius: 0 0 4px 4px; // Arredonda apenas o fundo se estiver colado no post
+  border-top: 1px solid $border-color;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+
+      &:focus {
+        border-color: $reddit-blue;
+      }
+    }
+
+    button {
+      align-self: flex-end;
+      background-color: $reddit-blue;
+      color: $white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: darken($reddit-blue, 10%);
+      }
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .comment_item {
+    padding-left: 12px;
+    border-left: 2px solid $border-color; // Linha vertical lateral estilo Reddit
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-left-color: $reddit-blue;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #1A1A1B;
+      line-height: 1.4;
+    }
+
+    span {
+      display: block;
+      margin-top: 4px;
+      font-size: 11px;
+      color: $reddit-grey;
+    }
+  }
+}
