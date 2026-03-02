@@ -43,4 +43,27 @@
       text-decoration: underline;
     }
   }
+
+  .google_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: white;
+  color: #757575;
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  
+  img { width: 18px; }
+  &:hover { background-color: #f1f1f1; }
+}
+
+.separator {
+  text-align: center;
+  margin: 15px 0;
+  color: #888;
+}
 }
