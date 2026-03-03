@@ -1,20 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Conexão direta com o Supabase (para o OAuth)
-const supabase = createClient(
-  'SUA_SUPABASE_URL', 
-  'SUA_SUPABASE_ANON_KEY'
-);
+// No Vite, usamos import.meta.env.VITE_NOME_DA_VARIAVEL
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Conexão direta com o Supabase
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const API_URL = 'https://api-not-chan.vercel.app';
 
 export const authService = {
-  // --- LOGIN COM GOOGLE (NOVO) ---
   async loginWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        // Para onde o usuário volta após logar no Google
         redirectTo: window.location.origin + '/home', 
       },
     });
@@ -23,7 +22,6 @@ export const authService = {
     return data;
   },
 
-  // --- LOGIN TRADICIONAL (MANTÉM) ---
   async login(email, password) {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
@@ -47,7 +45,6 @@ export const authService = {
     return data;
   },
 
-  // --- REGISTRO TRADICIONAL (MANTÉM) ---
   async register(email, password) {
     const response = await fetch(`${API_URL}/auth/register`, {
       method: 'POST',
