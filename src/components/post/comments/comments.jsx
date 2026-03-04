@@ -1,27 +1,29 @@
-import { useState } from 'react'; // Importação que faltava
+import { useState } from 'react';
 import { useRealtimeComments } from '../../../hooks/useRealtimeComments';
+// 1. Importe a função de criar comentário do seu service
+import { createComment } from '../../../services/postService'; 
 import style from './comments.module.scss';
 
 export function CommentSection({ postId }) {
   const comments = useRealtimeComments(postId);
   const [newComment, setNewComment] = useState('');
-
-  // Use a URL da Vercel em vez de localhost
-  const API_URL = 'https://api-not-chan.vercel.app';
+  const [loading, setLoading] = useState(false); // Dica: adicione um estado de loading
 
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || loading) return;
 
+    setLoading(true);
     try {
-      await fetch(`${API_URL}/comments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: newComment, postId }),
-      });
+      // 2. Use a função do service que já tem a URL CORRETA (/posts/comments)
+      await createComment(postId, newComment);
+      
       setNewComment('');
     } catch (err) {
       console.error("Erro ao enviar comentário:", err);
+      alert("Erro ao enviar comentário. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,8 +35,11 @@ export function CommentSection({ postId }) {
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="O que você acha disso?"
           required
+          disabled={loading} // Desativa o campo enquanto envia
         />
-        <button type="submit">Comentar</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Enviando...' : 'Comentar'}
+        </button>
       </form>
 
       <div className={style.list}>
@@ -44,7 +49,8 @@ export function CommentSection({ postId }) {
           comments.map(c => (
             <div key={c.id} className={style.comment_item}>
               <p>{c.content}</p>
-              <span>{new Date(c.createdAt).toLocaleString()}</span>
+              {/* 3. Verifique se o nome aqui é createdAt ou created_at (conforme o map do Prisma) */}
+              <span>{new Date(c.createdAt || c.created_at).toLocaleString()}</span>
             </div>
           ))
         )}
