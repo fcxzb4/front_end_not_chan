@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRealtimeComments } from '../../../hooks/useRealtimeComments';
-// 1. Importe a função de criar comentário do seu service
-import { createComment } from '../../../services/postService'; 
+import { createComment } from '../../../service/postService'; 
 import style from './comments.module.scss';
 
 export function CommentSection({ postId }) {
