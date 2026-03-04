@@ -1,6 +1,10 @@
-import style from './post_card.module.scss'
+import { useState } from 'react'; // Adicionado para controlar a exibição
+import { CommentSection } from '../comments/comments'; // Ajuste o caminho conforme sua pasta
+import style from './post_card.module.scss';
 
 function PostCard({ post }) {
+  const [showComments, setShowComments] = useState(false);
+
   return (
     <article className={style.post_card}>
       <header className={style.post_card__header}>
@@ -21,7 +25,22 @@ function PostCard({ post }) {
             {new Date(post.created_at).toLocaleDateString("pt-BR")}
           </span>
         )}
+        
+        {/* Botão para abrir/fechar comentários */}
+        <button 
+          className={style.comment_toggle} 
+          onClick={() => setShowComments(!showComments)}
+        >
+          {showComments ? 'Ocultar Comentários' : 'Ver Comentários'}
+        </button>
       </footer>
+
+      {/* Renderização condicional da seção de comentários */}
+      {showComments && (
+        <div className={style.post_comments_wrapper}>
+          <CommentSection postId={post.id} />
+        </div>
+      )}
     </article>
   );
 }

@@ -1,3 +1,5 @@
+@use "sass:color"; // 1. Importa o módulo de cores
+
 $reddit-blue: #0079D3;
 $reddit-grey: #878A8C;
 $border-color: #EDEFF1;
@@ -7,7 +9,7 @@ $white: #ffffff;
 .comment_section {
   background-color: $white;
   padding: 16px;
-  border-radius: 0 0 4px 4px; // Arredonda apenas o fundo se estiver colado no post
+  border-radius: 0 0 4px 4px;
   border-top: 1px solid $border-color;
 
   form {
@@ -42,7 +44,8 @@ $white: #ffffff;
       transition: background-color 0.2s;
 
       &:hover {
-        background-color: darken($reddit-blue, 10%);
+        // 2. Substitui darken($color, 10%) por color.adjust($color, $lightness: -10%)
+        background-color: color.adjust($reddit-blue, $lightness: -10%);
       }
 
       &:disabled {
@@ -60,7 +63,7 @@ $white: #ffffff;
 
   .comment_item {
     padding-left: 12px;
-    border-left: 2px solid $border-color; // Linha vertical lateral estilo Reddit
+    border-left: 2px solid $border-color;
     transition: border-color 0.2s;
 
     &:hover {

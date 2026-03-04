@@ -1,22 +1,34 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-// Use as mesmas variáveis que você já tem no .env
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_KEY
-);
+// 1. Definição segura das credenciais
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// 2. Inicialização do cliente (apenas se as chaves existirem)
+const supabase = (supabaseUrl && supabaseKey) 
+  ? createClient(supabaseUrl, supabaseKey) 
+  : null;
 
 export function useRealtimeComments(postId) {
   const [comments, setComments] = useState([]);
+  
+  // URL da sua API no NestJS (Vercel)
+  const API_URL = 'https://api-not-chan.vercel.app';
 
   useEffect(() => {
-    // 1. Buscar comentários iniciais via sua API NestJS
-    fetch(`http://localhost:3000/posts/${postId}/comments`)
-      .then(res => res.json())
-      .then(data => setComments(data));
+    if (!postId || !supabase) return;
 
-    // 2. Escutar novos comentários via WebSocket
+    // 1. Buscar comentários iniciais via sua API NestJS
+    fetch(`${API_URL}/posts/${postId}/comments`)
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        // Garante que 'data' seja um array antes de salvar
+        setComments(Array.isArray(data) ? data : []);
+      })
+      .catch(err => console.error("Erro ao carregar comentários:", err));
+
+    // 2. Escutar novos comentários via WebSocket (Realtime do Supabase)
     const channel = supabase
       .channel(`comments-post-${postId}`)
       .on(
@@ -24,16 +36,17 @@ export function useRealtimeComments(postId) {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'Comment',
+          table: 'Comment', // Certifique-se que o nome no banco é exatamente 'Comment'
           filter: `postId=eq.${postId}`,
         },
         (payload) => {
-          // Adiciona o novo comentário recebido pelo WebSocket na lista
+          // Adiciona o novo comentário no topo da lista
           setComments((prev) => [payload.new, ...prev]);
         }
       )
       .subscribe();
 
+    // Limpeza ao desmontar o componente
     return () => {
       supabase.removeChannel(channel);
     };
