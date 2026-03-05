@@ -37,7 +37,7 @@ export function useRealtimeComments(postId) {
           event: 'INSERT',
           schema: 'public',
           table: 'Comment', // Certifique-se que o nome no banco é exatamente 'Comment'
-          filter: `postId=eq.${postId}`,
+          filter: `post_id=eq.${postId}`,
         },
         (payload) => {
           // Adiciona o novo comentário no topo da lista

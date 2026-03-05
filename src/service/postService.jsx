@@ -40,10 +40,9 @@ export async function createComment(postId, content) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
       content: content, 
-      postId: Number(postId) 
+      postId: Number(postId) // <-- Garanta que está usando a variável postId aqui!
     }),
   });
-
-  if (!response.ok) throw new Error('Falha ao enviar comentário');
   return response.json();
 }
+ 
