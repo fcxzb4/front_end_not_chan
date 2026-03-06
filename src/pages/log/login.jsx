@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Adicionado useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../service/authService';
 import style from './login.module.scss';
 
@@ -7,40 +7,41 @@ export function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
-  const navigate = useNavigate(); // Inicializado aqui
+  const [loading, setLoading] = useState(false); // Estado para evitar múltiplos cliques
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       if (isLogin) {
-        const data = await authService.login(email, password);
-        console.log('Logado:', data);
-        alert('Logado com sucesso!');
-        navigate('/'); // Agora o navigate vai funcionar
+        await authService.login(email, password);
+        // Não precisamos dar alert se a Navbar mudar, mas é bom para o usuário
+        navigate('/'); 
       } else {
         await authService.register(email, password);
-        alert('Cadastro realizado! Verifique seu e-mail para confirmar a conta.');
+        alert('Cadastro realizado! Se o Supabase exigir, verifique seu e-mail.');
+        setIsLogin(true); // Muda para tela de login após cadastrar
       }
     } catch (err) {
-      alert('Erro na operação: ' + (err.message || 'Verifique os dados'));
+      alert('Erro: ' + (err.message || 'Verifique seus dados'));
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
       await authService.loginWithGoogle();
-      // O Supabase redireciona automaticamente após o login do Google
     } catch (err) {
-      console.error("Erro no Google OAuth:", err.message);
       alert('Erro ao entrar com Google');
     }
   };
 
   return (
     <div className={style.auth_container}>
-      <Link to="/" className={style.back_link}>
-        ← Voltar para o feed
-      </Link>
+      <Link to="/" className={style.back_link}>← Voltar para o feed</Link>
 
       <div className={style.auth_card}>
         <h2>{isLogin ? 'Entrar' : 'Cadastrar'}</h2>
@@ -60,19 +61,18 @@ export function AuthPage() {
             onChange={(e) => setPassword(e.target.value)} 
             required 
           />
-          <button type="submit" className={style.main_submit}>
-            {isLogin ? 'Logar' : 'Criar conta'}
+          <button type="submit" className={style.main_submit} disabled={loading}>
+            {loading ? 'Processando...' : (isLogin ? 'Logar' : 'Criar conta')}
           </button>
         </form>
 
-        {/* Separador visual opcional */}
         <div className={style.separator}>ou</div>
 
-        {/* Botão do Google fora do <form> para não disparar o handleSubmit */}
         <button 
           type="button" 
           onClick={handleGoogleLogin} 
           className={style.google_btn}
+          disabled={loading}
         >
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
           Entrar com Google

@@ -35,14 +35,16 @@ export async function getCommentsByPost(postId) {
 
 // 4. Enviar um novo comentário (Substitui o fetch solto)
 export async function createComment(postId, content) {
+  const { data: { session } } = await supabase.auth.getSession();
+  const token = session?.access_token;
+
   const response = await fetch(`${API_URL}/posts/comments`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      content: content, 
-      postId: Number(postId) // <-- Garanta que está usando a variável postId aqui!
-    }),
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // O Back-end agora exige isso
+    },
+    body: JSON.stringify({ content, postId }),
   });
   return response.json();
 }
- 

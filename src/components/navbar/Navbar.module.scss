@@ -26,4 +26,33 @@ $white: #ffffff;
       background-color: rgba($reddit-blue, 0.05);
     }
   }
+  .user_info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .welcome_text {
+    font-size: 0.9rem;
+    color: #ccc;
+    
+    strong {
+      color: #fff;
+    }
+  }
+
+  .logout_btn {
+    background: transparent;
+    border: 1px solid #ff4b4b;
+    color: #ff4b4b;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: #ff4b4b;
+      color: white;
+    }
+  }
+}
 }
