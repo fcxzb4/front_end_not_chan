@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+// const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+const supabaseUrl = "https://kbqqjvuwxmgfbtfnkpac.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImticXFqdnV3eG1nZmJ0Zm5rcGFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NTk1MjUsImV4cCI6MjA4NjMzNTUyNX0.6fZs9KyKKR_rucF9Gclx7G-MiBGKZ5Ezj5jDElAOv3Y";
 
  console.log("Supabase URL:", supabaseUrl);
 console.log("Anon Key carregada:", !!supabaseAnonKey);
